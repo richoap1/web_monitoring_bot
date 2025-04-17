@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => '__root__',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => NULL,
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => NULL,
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'laravel-zero/phar-updater' => array(
+            'pretty_version' => 'v1.4.0',
+            'version' => '1.4.0.0',
+            'reference' => '700fafcde3b59e261f896b1bdb0f5657f5d46f99',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel-zero/phar-updater',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'mronx/expose' => array(
+            'pretty_version' => 'v2.0.1',
+            'version' => '2.0.1.0',
+            'reference' => '81d324a3ebc6253aa6ccf07e76465cf22b7ff61b',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../mronx/expose',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

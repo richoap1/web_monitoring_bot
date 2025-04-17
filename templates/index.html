@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6">Modules</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for module in modules %}
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4">{{ module.name }}</h3>
+                <a href="{{ url_for('module_websites', module_id=module.id) }}" 
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                View Websites
+                </a>
+                <form action="{{ url_for('remove_module', module_id=module.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" 
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Remove Module
+                    </button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2 class="text-2xl font-bold mt-10 mb-6">Websites</h2>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+            <thead class="bg-blue-600 text-white uppercase text-sm leading-normal">
+                <tr>
+                    <th class="py-3 px-4 text-left">#</th>
+                    <th class="py-3 px-4 text-left">Website Name</th>
+                    <th class="py-3 px-4 text-left">URL</th>
+                    <th class="py-3 px-4 text-left">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if websites %}
+                    {% for site in websites %}
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-4">{{ loop.index }}</td>
+                            <td class="py-3 px-4">{{ site[1] }}</td>
+                            <td class="py-3 px-4">
+                                <a href="{{ site[2] }}" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">
+                                    {{ site[2] }}
+                                </a>
+                            </td>
+                            <td class="py-3 px-4">
+                                {% if site[3] == 'Online' %}
+                                    <span class="text-green-600 font-bold">🟢 Online</span>
+                                {% elif site[3] == 'Offline' %}
+                                    <span class="text-red-600 font-bold">🔴 Offline</span>
+                                {% else %}
+                                    <span class="text-gray-600 font-bold">⚪ Unknown</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="py-3 px-4 text-center text-gray-600">No websites found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

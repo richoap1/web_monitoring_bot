@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6">{{ module_name }} Websites</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for website in websites %}
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4">{{ website.webname }}</h3>
+                <p class="text-gray-700 mb-4">{{ website.url }}</p>
+                <p class="text-gray-700 mb-4">
+                    Status: 
+                    {% if website.status == 'Online' %}
+                        <span class="text-green-600 font-bold">🟢 Online</span>
+                    {% elif website.status == 'Offline' %}
+                        <span class="text-red-600 font-bold">🔴 Offline</span>
+                    {% else %}
+                        <span class="text-gray-600 font-bold">⚪ Unknown</span>
+                    {% endif %}
+                </p>
+                <div class="flex space-x-4">
+                    <a href="{{ url_for('edit_website', id=website.id) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit</a>
+                    <form action="{{ url_for('delete_website', id=website.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Delete</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- Move the Add Website button here -->
+    <div class="mt-6 text-center">
+        <a href="{{ url_for('add_website', module_id=module_id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Add Website
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}GPB - Checker{% endblock %}</title>
+    <!-- Tailwind CSS v3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+<!-- Navigation Bar -->
+<nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <!-- Logo -->
+        <div class="flex items-center space-x-4">
+            <img src="{{ url_for('static', filename='uploads/logo.jpeg') }}" alt="Logo" class="w-10 h-10 object-cover">
+            <a href="/" class="text-xl font-bold text-blue-600">GPB - Checker</a>
+        </div>
+        <div class="space-x-4 text-gray-700 hidden sm:flex">
+            <a href="{{ url_for('add_module') }}" class="text-gray-700 hover:text-blue-600 font-medium">Add Module</a>
+            <a href="{{ url_for('register') }}" class="text-gray-700 hover:text-blue-600 font-medium">Register</a>
+            <a href="{{ url_for('login') }}" class="text-gray-700 hover:text-blue-600 font-medium">login</a>
+            {% if current_user.role == 'owner' %}
+            <a href="{{ url_for('manage_users') }}" class="text-gray-700 hover:text-blue-600 font-medium">Manage Users</a>
+            {% endif %}
+        </div>
+        <div class="relative flex items-center space-x-2">
+            <!-- Profile Picture -->
+            <img src="{{ url_for('static', filename=current_user.profile_picture if current_user.profile_picture else 'default-profile.png') }}" 
+                alt="Profile Picture" 
+                class="w-8 h-8 rounded-full object-cover">
+            <!-- Dropdown Trigger -->
+            <button id="dropdownButton" class="text-gray-700 hover:text-blue-600 font-medium focus:outline-none">
+                {{ current_user.username }}
+                <svg class="w-4 h-4 inline ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="dropdownMenu" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden">
+                <a href="{{ url_for('profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                <a href="{{ url_for('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="flex-grow max-w-7xl mx-auto p-4 w-full">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- Footer -->
+<footer class="bg-white shadow-md mt-6">
+    <div class="max-w-7xl mx-auto px-4 py-4 text-center text-gray-600">
+        ©2025 GPB - Checker • All rights reserved.
+    </div>
+</footer>
+
+<script>
+    // Dropdown toggle logic
+    const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    dropdownButton.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+    });
+</script>
+
+</body>
+</html>

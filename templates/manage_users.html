@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-6">User Management</h2>
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow overflow-hidden">
+        <thead class="bg-blue-600 text-white uppercase text-sm leading-normal">
+            <tr>
+                <th class="py-3 px-4 text-left">ID</th>
+                <th class="py-3 px-4 text-left">Username</th>
+                <th class="py-3 px-4 text-left">Name</th>
+                <th class="py-3 px-4 text-left">Email</th>
+                <th class="py-3 px-4 text-left">Role</th>
+                <th class="py-3 px-4 text-left">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                <td class="py-3 px-4">{{ user[0] }}</td>
+                <td class="py-3 px-4">{{ user[1] }}</td>
+                <td class="py-3 px-4">{{ user[2] }}</td>
+                <td class="py-3 px-4">{{ user[3] }}</td>
+                <td class="py-3 px-4">
+                    <form method="POST" action="{{ url_for('manage_users') }}" class="inline">
+                        <input type="hidden" name="user_id" value="{{ user[0] }}">
+                        <select name="role" class="border rounded px-2 py-1">
+                            <option value="user" {% if user[4] == 'user' %}selected{% endif %}>User</option>
+                            <option value="admin" {% if user[4] == 'admin' %}selected{% endif %}>Admin</option>
+                            <option value="owner" {% if user[4] == 'owner' %}selected{% endif %}>Owner</option>
+                        </select>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                            Update
+                        </button>
+                    </form>
+                </td>
+                <td class="py-3 px-4">
+                    <form method="POST" action="{{ url_for('manage_users') }}" class="inline">
+                        <input type="hidden" name="delete_user_id" value="{{ user[0] }}">
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

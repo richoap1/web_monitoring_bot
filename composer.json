@@ -1,0 +1,5 @@
+{
+    "require": {
+        "mronx/expose": "^2.0"
+    }
+}
